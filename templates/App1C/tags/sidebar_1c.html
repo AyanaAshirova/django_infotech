@@ -1,0 +1,61 @@
+
+
+<h5 class="fw-medium text-secondary mb-2">Продукты:</h5>
+<ul class="mb-4"> 
+    {% for i in categories %}
+        {% if i.id == category.id %}
+        <li><span class="small active " href="{% url 'category_detail' i.slug %}">{{ i.name }}</span></li>
+        {% else %}
+        <li><a class="small" href="{% url 'category_detail' i.slug %}">{{ i.name }}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<h5 class="fw-medium text-primary mb-2">Фильтр</h5>
+<div class="mb-2">
+<form action="{% url 'filter' %}" method="get">
+    <div class="btn-group dropend mb-2">
+        <button type="button" class="btn btn-secondary dropdown-toggle rounded-pill" data-bs-toggle="dropdown" aria-expanded="false">
+            Отраслевые решения
+        </button>
+        <ul class="dropdown-menu filter-dropdown">
+            <h6 class="dropdown-header">Отраслевые решения</h6>
+            <div class="d-flex flex-md-wrap">
+                {% for i in industry_sln %}
+                    <div class="dropdown-item col-lg-6 col-md-12">
+                        <input type="checkbox" class="form-check-input" name="industry_sln" id="industry-{{ i.id }}" value="{{ i.slug }}">
+                        <label for="industry-{{ i.id }}">{{ i.name }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </ul>
+    </div>
+
+    <div class="btn-group dropend mb-4">
+        <button type="button" class="btn btn-secondary dropdown-toggle rounded-pill" data-bs-toggle="dropdown" aria-expanded="false">
+            Решения по задачам
+        </button>
+        <ul class="dropdown-menu filter-dropdown">
+            <h6 class="dropdown-header">Решения по задачам</h6>
+            <div class="d-flex flex-md-wrap">
+                {% for i in task_sln %}
+                    <div class="dropdown-item col-lg-6 col-md-12">
+                        <input type="checkbox" class="form-check-input" name="task_sln" id="task-{{ i.id }}" value="{{ i.slug }}">
+                        <label for="task-{{ i.id }}">{{ i.name }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </ul>
+    </div>
+
+    <p class="text-black fw-medium mb-4">Компании: </p>
+    {% for i in companies %}
+    <div class="form-check">
+        <input type="radio" class="form-check-input d-block pr-1"  id="defaulCheck-{{ i.id}}" name="company_type" value="{{ i.id }}" >
+        <label for="defaulCheck-{{ i.id}}" class="form-check-label small">{{ i.name }}</label>
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary mr-2 d-lg-block mt-2">Найти</button>
+</form>
+</div>

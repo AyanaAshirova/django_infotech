@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load sidebar_1c_tags %}
+
+{% block content %}
+ 
+<!-- BreadCrumbs Start -->
+<div class="container-xxl p-0 pt-lg-5 hero-header bg-secondary">
+    <div class="container m-0 p-0 py-lg-3 px-lg-5">
+        <div class="row m-0 p-0 g-5">
+            <div class="col-12 text-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+                        {% if other_sectors%}
+                        <li class="breadcrumb-item"><a href="#other_sectors">{{ other_sectors_name }}</a></li>
+                        {% endif %}
+                        <li class="breadcrumb-item"><a href="#">{{ sector.name }}</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BreadCrumbs End -->
+
+<div class="container-xxl mt-n3 mb-3">
+    <div class="container pb-5">
+        <div class="d-lg-flex">
+           <div class="col-md-12 col-lg-3">
+            <div class="bg-light rounded p-2">
+                {% get_sidebar_data %}
+            </div>
+           </div>
+
+           <div class="col-md-12 col-lg-9 ps-lg-3 pt-lg-4">
+
+            {% if messages %}
+            {% for i in messages %}
+                {% if i.tags == 'success' %}
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
+                    {{ i }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% elif i.tags == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ i }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            <div class="mb-4">
+                <h3 class="mb-4">{{ service.name }}</h3>
+                    <div class="mb-2 d-flex justify-content-between">
+                        <div class="form-group-text ">
+                            <span class="h5 section-title text-dark d-inline">Цена: </span>
+                            <span class="fs-5 text-danger fw-bold">{{ service.price }} сом</span>
+                        </div>
+                        <button class="btn-lg btn-danger rounded-pill border-0" data-bs-toggle="modal" data-bs-target="#form">
+                            <span class="fa fa-plus-circle"></span>
+                            Заказать
+                        </button>
+                        <div class="modal fade" id="form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Форма заявки</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {% include 'Includes/order_form.html' %}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                <div class="mb-4">
+                    <div class="mb-1 d-flex">
+                        <div class="fw-bold col-3">Бренд: </div>
+                        <div class="col-9">{{ service.extension.brand }}</div>
+                    </div>
+                    <div class="mb-1 d-flex">
+                        <div class="fw-bold col-3">Способ поставки: </div>
+                        <div class="col-9">{{ service.extension.delivery_method }}</div>
+                    </div>
+
+                    {% if service.extension.company_type %}
+                    <div class="mb-1 d-flex">
+                        <div class="fw-bold col-3">Для компании: </div>
+                        <div class="col-9">
+                            {% for i in service.extension.company_type.all %} 
+                            {{ i.name }}
+                            {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if service.extension.task_solutions %}
+                    <div class="mb-1 d-flex">
+                        <div class="fw-bold col-3">Решения по задачам: </div>
+                        <div class="col-9">
+                            {% for i in service.extension.task_solutions.all %} 
+                            {{ i.name }}
+                            {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if service.extension.industry_solutions %}
+                    <div class="mb-1 d-flex">
+                        <div class="fw-bold col-3">Отраслевые решения: </div>
+                        <div class="col-9">
+                            {% for i in service.extension.industry_solutions.all %} 
+                            {{ i.name }}
+                            {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>  
+            </div>
+
+            {% if service.description %}
+            <div class="accordion mb-4" id="accordionExample">
+                <div class="accordion-item bg-transparent ">
+                    <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button no-outline collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <p class="section-title m-0">Описание <span></span></p>
+                    </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            {{ service.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+
+           </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

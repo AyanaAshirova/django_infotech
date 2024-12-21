@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load sidebar_1c_tags %}
+
+{% block content %}
+ 
+
+<!-- BreadCrumbs Start -->
+<div class="container-xxl p-0 pt-lg-5 hero-header bg-secondary">
+    <div class="container m-0 p-0 py-lg-3 px-lg-5">
+        <div class="row m-0 p-0 g-5">
+            <div class="col-12 text-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+                        {% if other_sectors%}
+                        <li class="breadcrumb-item"><a href="#other_sectors">{{ other_sectors_name }}</a></li>
+                        {% endif %}
+                        <li class="breadcrumb-item"><a href="#">{{ sector.name }}</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BreadCrumbs End -->
+
+
+<div class="container-xxl mt-n3 mb-3">
+    <div class="container pb-5">
+        <div class="d-flex flex-md-wrap">
+           <div class="col-lg-3 col-md-12 bg-light rounded p-3">
+                {% get_sidebar_data %}
+
+           </div>
+           <div class="col-lg-9 col-md-12 ps-lg-2 d-flex flex-column justify-content-between">
+            {% if service_list %}
+            <ul class="list-unstyled">
+                {% for i in service_list %}
+                <li class="mb-2 p-3 rounded d-lg-flex bg-light">
+                    <div class="col-lg-10">
+                        <a href="{% url '1c_service_detail' i.slug %}" class="hover-cursor h5 ">{{ i.name }}</a> 
+                    </div>
+                    <div class="col-lg-2 justify-content-lg-center d-flex">
+                        <span class="text-secondary font-weight-medium">{{ i.price }} сом</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+
+            {% include 'Includes/pagination.html' %}
+            
+            
+            {% else %}
+
+            {% include 'Includes/no_any_services.html' %}
+            
+            {% endif %}
+
+           </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-xxl my-3 cool" id="other_sectors">
+    <div class="container py-5 px-lg-5 rounded fact bg-light m-auto">
+        <div class="wow fadeInUp" data-wow-delay="0.1s">
+            <p class="section-title text-secondary justify-content-center"><span></span>Какие решения мы предлагаем<span></span></p>
+            <h1 class="text-center mb-5">Все отрасли</h1>
+        </div>
+        <div class="my-n3 p-2">
+            <div class="row g-2">
+                <div class="d-flex flex-wrap">
+                    {% for i in view.get_industry_slns %}
+                    <div class="col-lg-6 col-md-12">
+                        <a class="btn btn-link" href="{% url 'sector_detail' i.slug %}">{{ i.name }}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

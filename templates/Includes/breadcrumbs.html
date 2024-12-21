@@ -1,0 +1,20 @@
+
+
+<div class="container-xxl p-0 pt-lg-5 hero-header bg-secondary">
+    <div class="container m-0 p-0 py-lg-3 px-lg-5">
+        <div class="row m-0 p-0 g-5">
+            <div class="col-12 text-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'main_service' main_service.slug %}">{{ main_service.name }}</a></li>
+                        {% if other_sectors%}
+                        <li class="breadcrumb-item"><a href="#other_sectors">{{ other_sectors_name }}</a></li>
+                        {% endif %}
+                        <li class="breadcrumb-item"><a href="#">{{ sector.name }}</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

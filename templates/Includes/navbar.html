@@ -1,0 +1,35 @@
+{% load navbar_tags %}
+
+<div class="container-xxl position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        <a href="{% url 'home' %}" class="navbar-brand  p-0">
+            <h1 class="m-0">Infotech</h1>
+            <!-- <img src="img/logo.png" alt="Logo"> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav mx-auto py-0">
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Продукты</a>
+                    <div class="dropdown-menu m-0">
+                        {% get_categories as categories %}
+                        {% for i in categories %}
+                            <a href="{% url 'category_detail' i.slug %}" class="dropdown-item">{{ i.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- <a href="{% url 'about' %}" class="nav-item nav-link">О компании</a> -->
+            </div>
+            <a href="#contacts" class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Контакты</a>
+            
+            <!-- <a href="cart.html" class="site-cart btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">
+                <div>
+                    <span class="fa fa-shopping-cart"></span>
+                    <span class="count">2</span>
+                </div>
+            </a> -->
+        </div>
+    </nav>
+</div>

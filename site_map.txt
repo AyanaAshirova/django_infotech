@@ -1,0 +1,241 @@
+MAKETS: 9,15,57
+
+
+Отраслевые решения:
+Сельское и лесное хозяйство
+Производство, ТЭК
+Строительство, девелопмент, ЖКХ
+Торговля, склад, логистика, транспорт
+Финансовый сектор
+Общественное и плановое питание, гостиничный бизнес
+Образование, культура
+Здравоохранение и медицина
+Профессиональные услуги
+Государственное и муниципальное управление
+
+Решения по задачам:
+Бухгалтерский и налоговый учет
+Документооборот
+Зарплата, управление персоналом и кадровый учет (HRM)
+Комплексное управление ресурсами предприятия (ERP)
+Управление инженерными данными и НСИ (PDM, MDM)
+Управление взаимоотношениями с клиентами (CRM)
+Управленческий и финансовый учет (FRP)
+Управление продажами, логистикой и транспортом (SFM, WMS, TMS)
+Управление информационными технологиями (ITIL)
+Управление проектами и портфелями проектов (PMO, EPM)
+
+Коммерческим фирмам
+Государственным предприятиям
+Отраслевые решения
+Решения по задачам
+
+Бренд:
+Продукты 1С:Предприятие
+
+Для компаний:
+Коммерческим фирмам
+Государственным предприятиям
+Для крупных проектов
+Услуги Среднему и малому бизнесу
+
+?--Услуги Крупному бизнесу
+-
+Отраслевые решения
+Решения по задачам
+
+Услуги/Категории:
+Продукты 1С:Предприятие
+1С:Информационно-технологическое сопровождение
+Дополнительные услуги по 1С
+1С в облаке
+
+
+CSS
+feature-item просто вверх
+service-item уходит в синий
+
+
+
+Торговое ПО на 1C
+fa-store
+Настроим техническую чаcть для вашего бизнеса
+
+Дизайн и брендирование
+fa-magic
+Создадим уникальный продающий стиль
+
+Разработка сайтов
+fa-laptop-code
+Сайты под ключ
+
+
+
+        <!-- Skydash Admin Stylesheet -->
+        <!-- <link href="{% static 'css/skydash/style.css' %}" rel="stylesheet"> -->
+        <!-- <link href="{% static 'css/ti-icons/css/themify-icons.css' %}" rel="stylesheet"> -->
+    <!-- <script src="{% static 'js/vendor.bundle.base.js' %}"></script> -->
+
+
+
+
+def index(request):
+    id=1
+    main_service = get_object_or_404(MainService, id=id)
+    other_services = MainService.objects.exclude(id=id)
+    categories = ServiceCategory.objects.filter(main_service=main_service)
+
+    company_type_list = ['Услуги Среднему и малому бизнесу','Коммерческим фирмам']
+    com_services_1с = Service.objects\
+        .filter(category__name='Продукты 1С:Предприятие')\
+        .select_related('extension')\
+        .filter(extension__company_type__name__in=company_type_list)
+    gov_services_1c = Service.objects\
+        .filter(category__name='Продукты 1С:Предприятие')\
+        .select_related('extension')\
+        .filter(extension__company_type__name='Государственным предприятиям',)
+    # services_1c = Service.objects.filter(category__name='Продукты 1С:Предприятие')
+    task_sln = TaskSolution.objects.filter()
+    industry_sln = IndustrySolution.objects.filter()
+
+    contex = {
+        'main_service': main_service,
+        'categories': categories,
+        'sites': other_services,
+        'com_srv_1с': com_services_1с,
+        'gov_srv_1c': gov_services_1c,
+        'task_sln': task_sln,
+        'industry_sln': industry_sln,
+        # 'services_1c': services_1c,
+    }
+    return render(request, 'App1C/index.html', contex)
+
+
+
+<p class="section-title text-secondary h5 mb-4 mt-5">Описание<span></span></p>
+<p class="text-truncate" style="max-height: 3.6em;overflow: hidden;">{{ service.description |slice:":100" }}</p>
+<p class="collapse" id="moreText">{{ service.description }}</p>
+<button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#moreText">Читать дальше</button>
+
+
+font
+"Mukta", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+
+
+     <div class="mb-5">
+          <div class="border p-4 rounded" role="alert">
+            Returning customer? <a href="#">Click here</a> to login
+          </div>
+      </div>
+
+
+
+<!-- ServiceList Start -->
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5 px-lg-5">
+        {% for i in services %}
+        <li class="mb-2 p-3 rounded d-lg-flex bg-light">
+            <div class="col-lg-10">
+                <a href="{% url 'service_detail' main_service_slug=i.main_service.slug slug=i.slug %}" class="hover-cursor h5 ">
+                    {{ i.name }}
+                </a> 
+            </div>
+            <div class="col-lg-2 justify-content-lg-center d-flex">
+                <span class="text-secondary font-weight-medium">{{ i.price }} сом</span>
+            </div>
+        </li>
+        {% endfor %}
+
+    </div>
+</div>
+<!-- ServiceList End -->
+
+
+                 <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="first-tab" data-bs-toggle="tab" data-bs-target="#first" type="button" role="tab" aria-controls="first" aria-selected="true">Коммерческим фирмам</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="second-tab" data-bs-toggle="tab" data-bs-target="#second" type="button" role="tab" aria-controls="second" aria-selected="true">Государственным предприятиям</button>
+                </li>
+
+                <div class="tab-pane fade show text-white active" id="first" role="tabpanel" aria-labelledby="first-tab">
+                    <div class="d-flex flex-wrap">
+                        {% for i in com_services_1с %}
+                        <div class="col-md-12 col-lg-6">
+                            <a class="btn btn-link " href="{% url '1c_service_detail' i.slug %}">{{ i.name }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade text-white" id="second" role="tabpanel" aria-labelledby="second-tab">
+                    <div class="d-flex flex-wrap">
+                        {% for i in gov_services_1с %}
+                        <div class="col-md-12 col-lg-6">
+                            <a class="btn btn-link " href="{% url '1c_service_detail' i.slug %}">{{ i.name }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if not gov_services_1с %}
+                    <div class="d-flex flex-wrap">
+                        <p class="section-title text-secondary h5 mb-4">Услуги Среднему и малому бизнесу<span></span></p>
+                        {% for i in categories %}
+                        <div class="col-md-12 col-lg-6">
+                            <a class="btn btn-link" href="">{{ i.name }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                    <!-- Feature Start -->
+    <div id="other_services" class="container py-5 px-lg-5">
+        <div class="wow fadeInUp" data-wow-delay="0.1s">
+            <p class="section-title text-secondary justify-content-center"><span></span>Другие услуги<span></span></p>
+            <h1 class="text-center mb-5">Ознакомтесь со всеми нашими услугами</h1>
+        </div>
+        {% include 'Includes/feature.html' %}
+    </div>
+    <!-- Feature End -->
+
+    border-bottom: 1px solid #dee2e6 !important;
+
+
+
+    
+<!-- Projects Start -->
+<div class="container-xxl py-5">
+    <div class="container py-5 px-lg-5">
+        <div class="wow fadeInUp" data-wow-delay="0.1s">
+            <p class="section-title text-secondary justify-content-center"><span></span>Виды услуг<span></span></p>
+            <h1 class="text-center mb-5">Для компании</h1>
+        </div>
+        <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="col-12 text-center">
+                <ul class="list-inline mb-5" id="portfolio-flters">
+                    <li class="mx-2 active" data-filter="*">Все</li>
+                    {% for i in companies %}
+                        <li class="mx-2" data-filter=".{{ i.id }}">{{ i.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="row g-4 portfolio-container">
+            {% for i in services %}
+            <div class="col-lg-4 col-md-6 portfolio-item {% for k in i.extension.company_type.all %} {{ k.id }} {% endfor %} wow fadeInUp" data-wow-delay="0.1s">
+                <div class="rounded overflow-hidden">
+                    <div class="bg-light p-4">
+                        <p class="text-primary fw-medium mb-2">{{ i.category.name }}</p>
+                        <a class="lh-base mb-0 link-dark" href="{% url 'service_detail' main_service_slug=i.main_service.slug service_slug=i.slug %}">{{ i.name }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% for i in companies %}
+            <div class="">
+                <a class="portfolio-item btn-link {{ i.id }} section-title wow fadeInUp" data-wow-delay="0.5s" >Смотреть все <span></span></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Projects End -->

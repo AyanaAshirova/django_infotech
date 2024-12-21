@@ -1,0 +1,20 @@
+{% load navbar_tags %}
+<div class="container-xxl py-5">
+    <div class="container pb-5 px-lg-5">
+        <div class="row g-4">
+            {% get_sites as sites %}
+            {% for item in sites %}
+            {% if main_service.id != item.id %}
+            <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+                <div class="main-service-item d-flex flex-column rounded text-center p-4">
+                    <i class="fa fa-3x {{item.icon}} text-secondary mb-4"></i>
+                    <h5 class="mb-3">{{ item.name }}</h5>
+                    <p class="m-0">{{ item.description }}</p>
+                    <a class="btn btn-square" href="{% url 'main_service' item.slug %}"><i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

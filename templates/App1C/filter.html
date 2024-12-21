@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load sidebar_1c_tags %}
+
+{% block content %}
+ 
+<!-- BreadCrumbs Start -->
+<div class="container-xxl p-0 pt-lg-5 hero-header bg-secondary">
+    <div class="container m-0 p-0 py-lg-3 px-lg-5">
+        <div class="row m-0 p-0 g-5">
+            <div class="col-12 text-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+                        <li class="breadcrumb-item"><span>{{ sector_name }}</span></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BreadCrumbs End -->
+
+<div class="container-xxl mt-n3 mb-3">
+    <div class="container pb-5">
+        <div class="d-flex flex-md-wrap">
+           <div class="col-lg-3 col-md-12 bg-light rounded p-3">
+                {% get_sidebar_data %}
+
+           </div>
+           <div class="col-lg-9 col-md-12 ps-lg-2">
+            {% if service_list %}
+            <ul class="list-unstyled">
+                {% for i in service_list %}
+                <li class="mb-2 p-3 rounded d-lg-flex bg-light">
+                    <div class="col-lg-10">
+                        <a href="{% url '1c_service_detail' i.slug %}" class="hover-cursor h5 ">{{ i.name }}</a> 
+                    </div>
+                    <div class="col-lg-2 justify-content-lg-center d-flex">
+                        <span class="text-secondary font-weight-medium">{{ i.price }} сом</span>
+                    </div>
+                    
+                </li>
+                {% endfor %}
+            </ul>
+
+            {% include 'Includes/pagination.html' %}
+
+            {% else %}
+            {% include 'Includes/no_any_services.html' %}
+            {% endif %}
+
+           </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% load footer_tags %}
+
+<!-- Footer Start -->
+<div class="container-fluid text-light footer wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5 px-lg-5">
+        <div class="row g-5">
+            <div class="col-md-6 col-lg-4" id="contacts">
+                {% get_footer_data as contacts %}
+                {% if contacts %}
+                    <p class="section-title text-white h5 mb-4">Контакты<span></span></p>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>{{ contacts.address }}</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>{{ contacts.phone }}</p>
+                    <p><i class="fa fa-envelope me-3"></i>{{ contacts.email }}</p>
+                    {% if contacts.telegram %}
+                    <a class="btn btn-outline-light btn-social" href="{{ contacts.telegram }}"><i class="fab fa-telegram"></i></a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <p class="section-title text-white h5 mb-4">Быстрые ссылки<span></span></p>
+                <a class="btn btn-link" href="{% url 'filter' %}">Фильтр</a>
+            </div>
+            <!-- <div class="col-md-6 col-lg-4">
+                <p class="section-title text-white h5 mb-4">Gallery<span></span></p>
+                <div class="row g-2">
+                    <div class="col-4">
+                        <img class="img-fluid" src="img/portfolio-1.jpg" alt="Image">
+                    </div>
+                    <div class="col-4">
+                        <img class="img-fluid" src="img/portfolio-2.jpg" alt="Image">
+                    </div>
+                    <div class="col-4">
+                        <img class="img-fluid" src="img/portfolio-3.jpg" alt="Image">
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+    <div class="container px-lg-5">
+        <div class="copyright">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a class="border-bottom" href="#">Infotech</a>  
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="footer-menu">
+                        <a href="{% url 'home' %}">Главная</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->

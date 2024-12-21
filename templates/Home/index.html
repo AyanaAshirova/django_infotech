@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load navbar_tags %}
+
+{% block content %}
+
+ <!-- Hero Start -->
+ <div class="pb-0 container-xx bg-secondary hero-header">
+    <div class="my-0 pb-0 container pt-5">
+        <!-- <h3 class="m-0 mb-4">
+            <i class="fa fa-map-marker-alt "></i> г. Ош
+        </h3> -->
+        <div class="d-lg-flex align-items-end">
+            <div class="col-lg-6 text-center text-lg-start pb-5">
+                <h1 class=" mb-4 animated slideInDown">"Инфотек" — автоматизация бизнес задач на 1С</h1>
+                <p class=" pb-3 animated slideInDown text-dark">В этой сфере с <span class="fw-bolder">2013</span>  года </p>
+                <a href="" class="btn btn-dark py-sm-3 px-sm-5 rounded-pill me-3 animated slideInLeft">Узнать больше</a>
+                <div class="pb-3"></div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-start">
+                <img class="img-fluid animated zoomIn " src="{% static 'img/hero.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->  
+
+
+
+<div class="container-xxl py-5">
+    <div class="container pb-5 px-lg-5">
+        <div class="wow fadeInUp" data-wow-delay="0.1s">
+            <p class="section-title text-secondary justify-content-center"><span></span>Виды услуг<span></span></p>
+            <h1 class="text-center mb-5">Наши направления</h1>
+        </div>
+        <div class="row g-4">
+            {% for item in categories %}
+            <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+                <div class="main-service-item d-flex flex-column rounded text-center p-4">
+                    <i class="fa fa-3x {{item.icon}} text-secondary mb-4"></i>
+                    <h5 class="mb-3">{{ item.name }}</h5>
+                    <p class="m-0">{{ item.description }}</p>
+                    <a class="btn btn-square" href="{% url 'category_detail' item.slug %}"><i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Tab Services Start -->    
+<div class="container-xxl bg-light tabs py-5 wow fadeInUp fact" data-wow-delay="0.1s">
+    <div class="container py-5 px-lg-5">
+        <div class="wow fadeInUp" data-wow-delay="0.1s">
+            <h1 class="text-center mb-5">Какие задачи мы решаем</h1>
+        </div>
+        <div class="row g-4 tabs">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="third-tab" data-bs-toggle="tab" data-bs-target="#third" type="button" role="tab" aria-controls="third" aria-selected="true">Отраслевые решения</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="forth-tab" data-bs-toggle="tab" data-bs-target="#forth" type="button" role="tab" aria-controls="forth" aria-selected="true">Решения по задачам</button>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content pt-4">    
+                <div class="tab-pane fade show text-white active" id="third" role="tabpanel" aria-labelledby="third-tab">
+                    <div class="d-flex flex-wrap">
+                        {% for i in view.get_industry_slns %}
+                        <div class="col-md-12 col-lg-6">
+                            <a class="btn btn-link " href="{% url 'sector_detail' i.slug %}">{{ i.name }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade text-white" id="forth" role="tabpanel" aria-labelledby="forth-tab">
+                    <div class="d-flex flex-wrap">
+                        {% for i in view.get_task_slns %}
+                        <div class="col-md-12 col-lg-6">
+                            <a class="btn btn-link" href="{% url 'task_detail' i.slug %}">{{ i.name }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- Tab Services End --> 
+    
+
+{% if service_list %}
+<!-- Projects Start -->
+<div class="container-xxl py-5">
+    <div class="container py-5 px-lg-5">
+        <div class="wow fadeInUp" data-wow-delay="0.1s">
+            <p class="section-title text-secondary justify-content-center"><span></span>Виды услуг<span></span></p>
+            <h1 class="text-center mb-5">Для компании</h1>
+        </div>
+        <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="col-12 text-center">
+                <ul class="list-inline mb-5" id="portfolio-flters">
+                    <li class="mx-2 active" data-filter="*">Все</li>
+                    {% for i in companies %}
+                        <li class="mx-2 mb-1" data-filter=".{{ i.id }}">{{ i.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="row g-4 portfolio-container">
+            {% for i in service_list %}
+            <div class="col-lg-4 col-md-6 portfolio-item {% for k in i.extension.company_type.all %} {{ k.id }} {% endfor %} wow fadeInUp" data-wow-delay="0.1s">
+                <div class="rounded overflow-hidden">
+                    <div class="bg-light p-4">
+                        <p class="text-primary fw-medium mb-2">{{ i.category.name }}</p>
+                        <a class="lh-base mb-0 link-dark" href="{% url 'service_detail' main_service_slug=i.main_service.slug service_slug=i.slug %}">{{ i.name }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Projects End -->
+{% endif %}
+
+<div class="container-xxl">
+    <div class="container px-lg-5">
+        <div class="wow fadeInUp text-center" data-wow-delay="0.1s">
+            <a class="link-primary hover-cursor text-uppercase fw-bold" href="{% url 'all_1c_services' %}" >
+                Смотреть все услуги<span class="d-inline-block mx-2 fa fa-angle-double-right"></span>
+            </a>
+        </div>
+    </div>
+</div>
+ 
+    
+<!-- About Start -->
+<!-- <div class="container-xxl py-5">
+    <div class="container py-5 px-lg-5">
+        <div class="row g-5 align-items-center">
+            <div class="wow fadeInUp" data-wow-delay="0.1s">
+                <p class="section-title text-primary">О направлении 1С<span></span></p>
+                <h1 class="mb-5">В этой сфере с 2013 года</h1>
+                <p class="mb-4">За это время было выполнено свыше 20 проектов для крупных компании и 36 для малых бизнесов</p>
+                
+                <a href="{% url 'about' %}" class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">Узнать больше</a>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- About End -->
+
+
+
+{% endblock %}

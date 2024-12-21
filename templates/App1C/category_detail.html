@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load sidebar_1c_tags %}
+
+{% block content %}
+ 
+
+<!-- BreadCrumbs Start -->
+<div class="container-xxl p-0 pt-lg-5 hero-header bg-secondary">
+    <div class="container m-0 p-0 py-lg-3 px-lg-5">
+        <div class="row m-0 p-0 g-5">
+            <div class="col-12 text-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="#other">Все категории</a></li>
+                        <li class="breadcrumb-item"><span>{{ category.name }}</span></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BreadCrumbs End -->
+
+
+<div class="container-xxl mt-n3 mb-3">
+    <div class="container pb-5">
+        <div class="d-flex flex-md-wrap">
+           <div class="col-lg-3 col-md-12 bg-light rounded p-3 mb-md-3">
+                {% get_sidebar_data %}
+
+           </div>
+           <div class="col-lg-9 col-md-12 ps-lg-2">
+            {% if service_list %}
+            <ul class="list-unstyled">
+                {% for i in service_list %}
+                <li class="mb-2 p-3 rounded d-lg-flex bg-light">
+                    <div class="col-lg-10">
+                        <a href="{% url '1c_service_detail' i.slug %}" class="hover-cursor h5 ">{{ i.name }}</a> 
+                    </div>
+                    <div class="col-lg-2 justify-content-lg-center d-flex">
+                        <span class="text-secondary font-weight-medium">{{ i.price }} сом</span>
+                    </div>
+                    
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="p-3 text-danger"><i class="fa fe-"></i>Нет подходящих услуг</div>
+            {% endif %}
+
+           </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-xxl py-5" id="other">
+    <div class="container pb-5 px-lg-5">
+        <div class="wow fadeInUp" data-wow-delay="0.1s">
+            <p class="section-title text-secondary justify-content-center"><span></span>Виды услуг<span></span></p>
+            <h1 class="text-center mb-5">Наши направления</h1>
+        </div>
+        <div class="row g-4">
+            {% for item in categories %}
+            <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+                <div class="main-service-item d-flex flex-column rounded text-center p-4">
+                    <i class="fa fa-3x {{item.icon}} text-secondary mb-4"></i>
+                    <h5 class="mb-3">{{ item.name }}</h5>
+                    <p class="m-0">{{ item.description }}</p>
+                    <a class="btn btn-square" href="{% url 'category_detail' item.slug %}"><i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
