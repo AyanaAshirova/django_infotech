@@ -90,23 +90,18 @@
         portfolioIsotope.isotope({filter: $(this).data('filter')});
     });
 
-    // 
+    // My scripts
     $('ul.filter-dropdown').on('click', function(event){
         event.stopPropagation();
     });
 
-    $('.alert').each( function () {
-        setTimeout(function() {
-            $(this).alert('close');
-        }, 3000)
-    });
-    $('.alert').each( function () {
-        setTimeout(function() {
-            $(this).fadeOut(500, function() {
-                $(this).remove();
-            });
-        }, 3000)
-    });
+
+    setTimeout(function() {
+        $('#message').fadeOut(500, function() {
+            $('#message').remove();
+        });
+    }, 3000);
+
       
 })(jQuery);
 

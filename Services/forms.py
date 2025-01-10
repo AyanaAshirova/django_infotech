@@ -1,12 +1,12 @@
 from .models.order import Order
-from django.forms import BaseModelForm
 from django import forms
+from captcha.fields import CaptchaField
 
 
 class OrderForm(forms.ModelForm):
+    captcha = CaptchaField()
     class Meta:
         model = Order
-
         fields = ['name', 'phone', 'email', 'details']
 
 

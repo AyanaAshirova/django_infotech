@@ -52,19 +52,12 @@ class ServiceDetail(DetailView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
             context = super().get_context_data(**kwargs)
             context['main_service'] = get_object_or_404(MainService, slug=self.kwargs.get('main_service_slug'))
-            
+            context['form'] = OrderForm()
             return context
     
 
 
-
-def category_detail(request, slug):
-    return render(request, 'Services/category_detail.html')
-
-
 class OrderCreate(View):
-    model = Order
-
     def post(self, request, *args, **kwargs):
         form = OrderForm(request.POST)
         service = get_object_or_404(Service, id=kwargs.get('service_id'))
@@ -74,23 +67,13 @@ class OrderCreate(View):
             order.service = service
             order.main_service = main_service
             order.save()
-            messages.success(request, 'Отправлено')
-            return redirect('service_detail', main_service_slug=main_service.slug, service_slug=service.slug)
+            messages.success(request, 'Заявка отправлена ')
+            return redirect('home')
         
         messages.error(request, 'Возникла ошибка при отправке!')
         return redirect('service_detail', main_service_slug=main_service.slug, service_slug=service.slug)
         
 
-    def get(self, request, *args, **kwargs):
-        service = get_object_or_404(Service, id=kwargs.get('service_id'))
-        main_service = get_object_or_404(MainService, id=kwargs.get('main_service_id'))
-        return redirect('service_detail', main_service_slug=main_service.slug, service_slug=service.slug)
 
-
-    # def form_valid(self, form: BaseModelForm) -> HttpResponse:
-    #     form.instance.service = get_object_or_404(Service, id=self.request.POST.get('service_id'))
-    #     form.instance.main_service = get_object_or_404(MainService, id=self.request.POST.get('main_service_id'))
-    #     return super().form_valid(form)
-    
-    # def get_success_url(self) -> str:
-    #     return super().get_success_url()
+def category_detail(request, slug):
+    return render(request, 'Services/category_detail.html')

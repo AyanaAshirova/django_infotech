@@ -1,6 +1,6 @@
 
 
-<h5 class="fw-medium text-secondary mb-2">Продукты:</h5>
+<h5 class="fw-medium mb-2">Продукты:</h5>
 <ul class="mb-4"> 
     {% for i in categories %}
         {% if i.id == category.id %}
@@ -31,7 +31,9 @@
         </ul>
     </div>
 
-    <div class="btn-group dropend mb-4">
+    <br/>
+
+    <div class="btn-group dropend mb-2">
         <button type="button" class="btn btn-secondary dropdown-toggle rounded-pill" data-bs-toggle="dropdown" aria-expanded="false">
             Решения по задачам
         </button>
@@ -48,7 +50,7 @@
         </ul>
     </div>
 
-    <p class="text-black fw-medium mb-4">Компании: </p>
+    <p class="text-black fw-medium mb-2 mt-2">Компании: </p>
     {% for i in companies %}
     <div class="form-check">
         <input type="radio" class="form-check-input d-block pr-1"  id="defaulCheck-{{ i.id}}" name="company_type" value="{{ i.id }}" >

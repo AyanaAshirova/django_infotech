@@ -706,7 +706,7 @@ a:hover .count {
 
 .tabs .nav-link.active {
     color: var(--dark);
-    background-color: var(--grey);
+    background-color: var(--secondary);
 }
 
 .tabs *, .tabs button {
@@ -888,4 +888,11 @@ a.small:hover {
 }
 a.small.active {
     border-bottom: 1px solid var(--secondary) !important;
+}
+
+#message {
+    position: fixed;
+    top: 30vh;
+    right: 10px;
+    z-index: 99999;
 }

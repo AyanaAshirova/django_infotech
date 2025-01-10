@@ -29,28 +29,14 @@
     <div class="container pb-5">
         <div class="d-lg-flex">
            <div class="col-md-12 col-lg-3">
-            <div class="bg-light rounded p-2">
+            <div class="bg-light rounded p-3 mb-md-3">
                 {% get_sidebar_data %}
             </div>
            </div>
 
            <div class="col-md-12 col-lg-9 ps-lg-3 pt-lg-4">
 
-            {% if messages %}
-            {% for i in messages %}
-                {% if i.tags == 'success' %}
-                <div class="alert alert-success alert-dismissible fade show " role="alert">
-                    {{ i }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% elif i.tags == 'error' %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ i }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endif %}
-            {% endfor %}
-            {% endif %}
+            {% include 'Includes/message.html' %}
 
             <div class="mb-4">
                 <h3 class="mb-4">{{ service.name }}</h3>

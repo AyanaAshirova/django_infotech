@@ -1,0 +1,21 @@
+.related-widget-wrapper select {
+    height: 200px !important;
+}
+.form-row select[multiple] {
+    height: 200px !important;
+
+}
+@media (max-width: 767px) {
+    .form-row select[multiple] {
+        height: 200px !important;
+    
+    }
+
+}
+@media (max-width: 1024px) {
+    .form-row select[multiple] {
+        height: 200px !important;
+    
+    }
+
+}
