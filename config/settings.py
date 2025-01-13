@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-clc81)+o=dv)88-=p5#8g3g_6%nom7q+0&hk^u3#*f1a!%ug)m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -69,9 +69,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'infotech_db',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'USER': 'infotech',
+        'PASSWORD': 'root@root',
+        'HOST': '0.0.0.0',
         'PORT': '3306'
     }
 }
@@ -112,9 +112,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+if not  DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+else:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static')
+    ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
