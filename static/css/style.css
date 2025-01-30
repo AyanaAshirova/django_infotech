@@ -1,7 +1,7 @@
 /********** Template CSS **********/
 :root {
     /* --primary: #6222CC; */
-    /* --secondary: #FBA504; */
+    --secondary: #FBA504;
 
     /* violet #6222CC */
     /* grey #BFBFBD */
@@ -9,8 +9,8 @@
     /* yellow #F2CB05 */
     /* light-yellow #F2DE77 */
 
-    --primary: #6222CC;
-    --secondary: #F2CB05;
+    --primary: #0a376e;
+    /* --secondary: #efc72c; */
     --light: #F6F4F9;
     --dark: #262624 ;
     --grey: #BFBFBD ;
@@ -617,6 +617,14 @@ a:hover .count {
     border-top: 1px solid rgba(256, 256, 256, .1);
 }
 
+.footer .section-title{
+    color: var(--secondary) !important;
+}
+.footer .section-title span:first-child::after, 
+.footer .section-title.text-white span:first-child {
+    background-color: var(--secondary) !important;
+}
+
 .footer .copyright a {
     color: var(--light);
 }
@@ -705,8 +713,8 @@ a:hover .count {
 
 
 .tabs .nav-link.active {
-    color: var(--dark);
-    background-color: var(--grey);
+    color: var(--light);
+    background-color: var(--primary);
 }
 
 .tabs *, .tabs button {

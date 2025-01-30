@@ -13,6 +13,8 @@ from .models import *
 from App1C.views import SERVICE_1C_SLUG, SERVICE_1C_ID
 
 
+
+
 class MainServiceView(TemplateView):
     template_name = 'Services/index.html'
 
@@ -62,9 +64,16 @@ def category_detail(request, slug):
     return render(request, 'Services/category_detail.html')
 
 
+
+from django.views.decorators.csrf import csrf_exempt
+import asyncio
+from TeleBot.bot import send_message
+
+
 class OrderCreate(View):
     model = Order
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         form = OrderForm(request.POST)
         service = get_object_or_404(Service, id=kwargs.get('service_id'))
@@ -73,8 +82,13 @@ class OrderCreate(View):
             order = form.save(commit=False)
             order.service = service
             order.main_service = main_service
+            ms_body = str(f'{order.name}   {order.email}  тел: {order.phone} \n{order.details}\nid{service.id}: {service.name}')
+            asyncio.run(send_message(ms_body))
             order.save()
             messages.success(request, 'Отправлено')
+
+
+
             return redirect('service_detail', main_service_slug=main_service.slug, service_slug=service.slug)
         
         messages.error(request, 'Возникла ошибка при отправке!')

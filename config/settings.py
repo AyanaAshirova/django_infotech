@@ -14,8 +14,10 @@ SECRET_KEY = 'django-insecure-clc81)+o=dv)88-=p5#8g3g_6%nom7q+0&hk^u3#*f1a!%ug)m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+TELEGRAM_BOT_TOKEN = "7240126305:AAE1xAe53NivxVY8gInrMmfDjDx_G0iod_s"
+TELEGRAM_ADMIN_ID = '1369070288'
 
 # Application definition
 
@@ -29,6 +31,7 @@ INSTALLED_APPS = [
     'Home',
     'Services',
     'App1C',
+    'TeleBot',
 ]
 
 MIDDLEWARE = [
@@ -69,9 +72,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'infotech_db',
-        'USER': 'infotech',
-        'PASSWORD': 'root@root',
-        'HOST': '0.0.0.0',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
@@ -112,12 +115,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-if not  DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-else:
+if DEBUG:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static')
     ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 # Default primary key field type
