@@ -1,2 +1,5 @@
-.venv
+.venv/
 site_map.txt
+__pycache__/
+*.pyc
+*.pyo
