@@ -58,14 +58,8 @@ class ServiceDetail(DetailView):
             return context
     
 
-
-<<<<<<< HEAD
-class OrderCreate(View):
-=======
-
 def category_detail(request, slug):
     return render(request, 'Services/category_detail.html')
-
 
 
 from django.views.decorators.csrf import csrf_exempt
@@ -77,7 +71,6 @@ class OrderCreate(View):
     model = Order
 
     @csrf_exempt
->>>>>>> 7ff3f5d1a784379ac844cbb865652e5c9e68c18a
     def post(self, request, *args, **kwargs):
         form = OrderForm(request.POST)
         service = get_object_or_404(Service, id=kwargs.get('service_id'))
@@ -89,17 +82,11 @@ class OrderCreate(View):
             ms_body = str(f'{order.name}   {order.email}  тел: {order.phone} \n{order.details}\nid{service.id}: {service.name}')
             asyncio.run(send_message(ms_body))
             order.save()
-<<<<<<< HEAD
+
             messages.success(request, 'Заявка отправлена ')
-            return redirect('home')
-=======
-            messages.success(request, 'Отправлено')
-
-
 
             return redirect('service_detail', main_service_slug=main_service.slug, service_slug=service.slug)
->>>>>>> 7ff3f5d1a784379ac844cbb865652e5c9e68c18a
-        
+  
         messages.error(request, 'Возникла ошибка при отправке!')
         return redirect('service_detail', main_service_slug=main_service.slug, service_slug=service.slug)
         
