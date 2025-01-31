@@ -23,8 +23,6 @@ class Index(CompanyTaskIndustry, TemplateView):
         
         service_home_list = ServiceList.objects.get(id=1)
         context['service_list'] = service_home_list.services.all()
-        
-        print(service_home_list.services.all())
 
         context['companies'] = CompanyType.objects.all()
 

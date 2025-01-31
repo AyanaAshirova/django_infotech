@@ -1,4 +1,6 @@
 {% if page_obj.has_other_pages %}
+{% load static %}
+
 <nav>
     <ul class="pagination">
     {% for p in paginator.page_range %}

@@ -3,11 +3,22 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.conf.urls import handler404
+from django.shortcuts import render
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('captcha/', include('captcha.urls')),
     path('', include('Home.urls')),
 ]
 
+def page_not_found(request, ex):
+    return render(request, '404.html', status=404)
+
+handler404 = 'config.urls.page_not_found'
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
