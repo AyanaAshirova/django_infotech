@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'Home',
     'Services',
     'App1C',
-    'TeleBot',
 ]
 
 MIDDLEWARE = [
